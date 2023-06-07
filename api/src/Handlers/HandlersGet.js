@@ -1,4 +1,3 @@
-const { all } = require("axios");
 const {
   getCountriesAll,
   getCountriesId,

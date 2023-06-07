@@ -1,11 +1,18 @@
 import axios from "axios";
 import {
-    CREATE_ACTIVITIES,
+  CREATE_ACTIVITIES,
   GET_ACTIVITY,
   GET_COUNTRIES,
   GET_COUNTRIES_BY_ID,
   GET_COUNTRIES_BY_NAME,
+  ORDER_BY_CONTINENTS,
+  ORDER_BY_NAME,
+  GET_FROM,
+  CLEAN_BDD,
+  SET_CURRENT_PAGE,
+  ORDER_BY_POPULATION,
 } from "./types";
+
 export const getCountries = () => {
   return async function (dispatch) {
     const countries = await axios.get(`http://localhost:3001/countries`);
@@ -32,17 +39,58 @@ export const getCountriesId = (id) => {
   };
 };
 
-export function createActivities (){
-    return async function (dispatch){
-        const activities = await axios.post(`http://localhost:3001/activity`)
-        const create = activities.data
-        dispatch({type: CREATE_ACTIVITIES, payload: create})
-    }
+export function createActivities() {
+  return async function (dispatch) {
+    const activities = await axios.post(`http://localhost:3001/activity`);
+    const create = activities.data;
+    dispatch({ type: CREATE_ACTIVITIES, payload: create });
+  };
 }
-export const getActivities = ()=> {
-    return async function (dispatch) {
-        const activities = await axios.get(`http://localhost:3001/activity`)
-        const allActivties = activities.data
-        dispatch({type: GET_ACTIVITY, payload: allActivties})
-    }
+export const getActivities = () => {
+  return async function (dispatch) {
+    const activities = await axios.get(`http://localhost:3001/activity`);
+    const allActivties = activities.data;
+    dispatch({ type: GET_ACTIVITY, payload: allActivties });
+  };
+};
+
+export function orderByName(name) {
+  return {
+    type: ORDER_BY_NAME,
+    payload: name,
+  };
+}
+
+export function orderByContinents(continents) {
+  return {
+    type: ORDER_BY_CONTINENTS,
+    payload: continents,
+  };
+}
+
+export function ordenByPopulation(population) {
+  return {
+    type: ORDER_BY_POPULATION,
+    payload: population,
+  };
+}
+
+export function getFrom(source) {
+  return {
+    type: GET_FROM,
+    payload: source,
+  };
+}
+
+export function cleanBDD() {
+  return {
+    type: CLEAN_BDD,
+  };
+}
+
+export function setCurrentPage(page) {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload: page,
+  };
 }

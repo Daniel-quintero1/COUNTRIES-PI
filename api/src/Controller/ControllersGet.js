@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { Country, Activity } = require("../db");
 
-const URL = `https://restcountries.com/v2/all?fields=alpha3Code,name,flags,region,capital,subregion,area,population`;
+const URL = `https://restcountries.com/v2/all`;
 
 const getCountriesApi = async () => {
   const url = await axios.get(URL);
