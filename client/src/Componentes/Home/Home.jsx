@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import CardsContainer from "../CardsContainer/CardsContainer";
 import { useDispatch } from "react-redux";
-import { getCountries, ordenByPopulation, orderByContinents, orderByName } from "../../Redux/Actions";
+import { cleanBDD, getCountries, getFrom, ordenByPopulation, orderByContinents, orderByName, setCurrentPage } from "../../Redux/Actions";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -9,6 +9,18 @@ const Home = () => {
   useEffect(() => {
     dispatch(getCountries());
   }, [dispatch]);
+
+  const onClickBdd = (e)=> {
+    const value = e.target.value
+    dispatch(getFrom(value))
+    dispatch(cleanBDD())
+    dispatch(setCurrentPage(1))
+  }
+  const onClickTodo = ()=> {
+    dispatch(getCountries())
+    dispatch(cleanBDD())
+    dispatch(setCurrentPage(1))
+  }
 
   return (
     <div>
@@ -48,7 +60,8 @@ const Home = () => {
           ))}
         </select>
       </div>
-      <button>BDD</button>
+      <button value="BDD" onClick={onClickBdd}>BDD</button>
+      <button value="TODO" onClick={onClickTodo}>TODO</button>
       <CardsContainer />
     </div>
   );

@@ -38,7 +38,7 @@ const Form = () => {
     e.preventDefault();
     alert("Send Information");
     axios
-      .get(`http://localhost:3001/activity`)
+      .post(`http://localhost:3001/activity`, form)
       .then((res) => alert("Activities Add"))
       .catch((err) => alert(err));
     setForm({
@@ -61,8 +61,19 @@ const Form = () => {
       setForm({ ...form, countries: [...selectCountries, value] });
     }
   };
+  const handlerSelectSeason = (e) => {
+    const value = e.target.value;
+    const selectCountries = form.season;
+    if (selectCountries.includes(value)) {
+      setForm({
+        ...form,
+        season: selectCountries.filter((filtra) => filtra !== value),
+      });
+    } else {
+      setForm({ ...form, season: [...selectCountries, value] });
+    }
+  };
   const buscarId = (id) => {
-    //MODIFICAR A NAME
     const countriesActivity = country.find((e) => e.id === id);
     return countriesActivity.name;
   };
@@ -114,7 +125,7 @@ const Form = () => {
           name="season"
           placeholder="Select Season..."
         />
-        <select name="season" multiple={true} value={form.season} >
+        <select name="season" multiple={true} value={form.season} onChange={handlerSelectSeason}  >
        {["Verano", "Otoño", "Invierno", "Primavera"].map((e, i)=> <option key={i} value={e}>{e}</option>)}
         </select>
         <span>{error.season}</span>
