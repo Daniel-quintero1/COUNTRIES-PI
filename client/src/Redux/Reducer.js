@@ -17,20 +17,22 @@ const initialState = {
   countriesDetail: {},
   activities: [],
   currentPage: 1,
+  detailActivities: {}
 };
 
+const newLocal = "Ascendente Population";
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_COUNTRIES:
       return { ...state, countries: payload };
     case GET_COUNTRIES_BY_NAME:
-      return { ...state, countriesByName: payload };
+      return { ...state, countries : payload };
     case GET_COUNTRIES_BY_ID:
       return { ...state, countriesDetail: payload };
     case GET_ACTIVITY:
       return { ...state, activities: payload };
     case CREATE_ACTIVITIES:
-      return { ...state, countriesDetail: payload };
+      return { ...state, detailActivities: payload };
     case ORDER_BY_NAME:
       const copyCountriesName =
         state.countriesBdd.length > 0
@@ -44,6 +46,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         if (a.nme < b.name) {
           return payload === "Nombre Ascendente" ? -1 : 1;
         }
+        return 0
       });
       return { ...state, countries: sortCountries };
     case ORDER_BY_CONTINENTS:
@@ -53,11 +56,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
           : [...state.countries];
       const sortContinents = copyContinents.sort((a, b) => {
         if (a.continents > b.continents) {
-          return payload === "Ascendente Continents";
+          return payload === "Ascendente Continents" ? 1 : -1;
         }
         if (a.continents < b.continents) {
-          return payload === "Ascendente Continents";
+          return payload === "Ascendente Continents" ? -1 : 1;
         }
+        return 0
       });
       return { ...state, countries: sortContinents };
     case ORDER_BY_POPULATION:
@@ -67,11 +71,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
           : [...state.countries];
       const sortPopulation = copyPopulation.sort((a, b) => {
         if (a.population > b.population) {
-          return payload === "Ascendente Population";
+          return payload === newLocal ? 1: -1;
         }
         if (a.population < b.population) {
-          return payload === "Ascendente Population";
+          return payload === "Ascendente Population" ? -1 : 1;
         }
+        return 0
       });
       return { ...state, countries: sortPopulation };
       case CLEAN_BDD:

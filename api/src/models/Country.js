@@ -14,10 +14,9 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      flaps: {
+      flag: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: true, 
       },
       continents: {
         type: DataTypes.STRING,

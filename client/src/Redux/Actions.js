@@ -16,7 +16,7 @@ import {
 export const getCountries = () => {
   return async function (dispatch) {
     const countries = await axios.get(`http://localhost:3001/countries`);
-    const allCountries = countries.data;
+    const allCountries = countries.data; //revisar si es con data o sin data
     dispatch({ type: GET_COUNTRIES, payload: allCountries });
   };
 };

@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { Country, Activity } = require("../db");
 
-const URL = `https://restcountries.com/v2/all`;
+const URL = `https://rest-countries.up.railway.app/v2/all`;
 
 const getCountriesApi = async () => {
   const url = await axios.get(URL);
@@ -13,13 +13,14 @@ const getCountriesBdd = async () => {
     await Country.create({
       id: count.alpha3Code,
       name: count.name,
-      flags: count.flags.png,
+      flag: count.flags.png,
       continents: count.region,
       capital: count.capital,
       subregion: count.subregion,
       area: count.area,
       population: count.population,
-    });
+    })
+  
   }
 };
 const getCountriesAll = async () => {

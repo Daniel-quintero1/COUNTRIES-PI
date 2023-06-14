@@ -23,7 +23,6 @@ const postActivities = async (
   }
   return createActivities;
 };
-///FALTA ARREGLAR LA UNION DE LOS MODELOS
 module.exports = {
   postActivities,
 };
