@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {  getCountries } from "../../Redux/Actions";
 import Validation from "../Validation/Validation";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -16,7 +15,8 @@ const Form = () => {
   const [form, setForm] = useState({
     name: "",
     difficulty: "",
-    season: [],
+    // season: [],
+    season: "",
     duration: "",
     countries: [],
   });
@@ -40,11 +40,22 @@ const Form = () => {
     axios
       .post(`http://localhost:3001/activity`, form)
       .then((res) => alert("Activities Add"))
-      .catch((err) => alert(err));
+      .catch((error) => {
+        // Manejar el error de Bad Request (400)
+        if (error.response && error.response.status === 400) {
+          alert("Bad Request: Invalid form data"); // Mostrar mensaje de error específico
+          // También puedes actualizar el estado para mostrar el error en el formulario, por ejemplo:
+          // setError({ ...error, form: "Invalid form data" });
+        } else {
+          // Otro tipo de error
+          alert("Error: " + error.message);
+        }
+      })
     setForm({
       name: "",
       difficulty: "",
-      season: [],
+      // season: [],
+      season: "",
       duration: "",
       countries: [],
     });
@@ -61,18 +72,18 @@ const Form = () => {
       setForm({ ...form, countries: [...selectCountries, value] });
     }
   };
-  const handlerSelectSeason = (e) => {
-    const value = e.target.value;
-    const selectCountries = form.season;
-    if (selectCountries.includes(value)) {
-      setForm({
-        ...form,
-        season: selectCountries.filter((filtra) => filtra !== value),
-      });
-    } else {
-      setForm({ ...form, season: [...selectCountries, value] });
-    }
-  };
+  // const handlerSelectSeason = (e) => {
+  //   const value = e.target.value;
+  //   const selectCountries = form.season;
+  //   if (selectCountries.includes(value)) {
+  //     setForm({
+  //       ...form,
+  //       season: selectCountries.filter((filtra) => filtra !== value),
+  //     });
+  //   } else {
+  //     setForm({ ...form, season: [...selectCountries, value] });
+  //   }
+  // };
   const buscarId = (id) => {
     const countriesActivity = country.find((e) => e.id === id);
     return countriesActivity.name;
@@ -84,41 +95,42 @@ const Form = () => {
     <form onSubmit={handlerSubmit}>
       <hr />
       <div>
-        <label>Name of Activities </label>
+        <label>Actividad Turistica</label>
         <input
           type="text"
           value={form.name}
           onChange={handlerForm}
           name="name"
-          placeholder="Writing Activities..."
+          placeholder="Escribe tu Actividad..."
         />
         <span>{error.name ? error.name : " "}</span>
       </div>
       <div>
-        <label>Level of Difficulty </label>
+        <label>Nivel de Dificultad </label>
         <input
           type="text"
           value={form.difficulty}
           onChange={handlerForm}
           name="difficulty"
-          placeholder="Writing  Level Difficulty..."
+          placeholder="Escribe tu Dificultad..."
         />
         <span>{error.difficulty}</span>
       </div>
       <div>
-        <label>Time of Duration </label>
+        <label>Tiempo de Duracion</label>
         <input
           type="text"
           value={form.duration}
           onChange={handlerForm}
           name="duration"
-          placeholder="Writing Time Duration..."
+          placeholder="Escribe el tiempo..."
         />
         <span>{error.duration}</span>
       </div>
       <div>
-      <label>Select Season </label>
-        <input
+      <label>Temporada del Año</label>
+      <input type="text" value={form.season} onChange={handlerForm} name="season" placeholder="Escribe tu Temporada" />
+        {/* <input
           type="text"
           value={form.season.map((e)=> e)}
           onChange={handlerForm}
@@ -127,17 +139,17 @@ const Form = () => {
         />
         <select name="season" multiple={true} value={form.season} onChange={handlerSelectSeason}  >
        {["Verano", "Otoño", "Invierno", "Primavera"].map((e, i)=> <option key={i} value={e}>{e}</option>)}
-        </select>
+        </select> */}
         <span>{error.season}</span>
       </div>
       <div>
-        <label>Name of Countries </label>
+        <label>Selecciona Tu Pais</label>
         <input
           type="text"
           value={countrieMap}
           onChange={handlerForm}
           name="countries"
-          placeholder="Select Countries..."
+          placeholder="Selccion el Pais..."
         />
         <select
           name="countries"
@@ -151,11 +163,8 @@ const Form = () => {
         </select>
         <span>{error.countries}</span>
       </div>
-      <button type="submit">ADD NEW tourist activity</button>
+      <button type="submit">Agrega la Actividad</button>
       <hr />
-      <Link to="/home">Back To Home</Link>
-      <hr />
-      <Link to="/landing">Back To Landing</Link>
     </form>
   );
 };

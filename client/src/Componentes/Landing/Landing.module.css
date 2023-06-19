@@ -1,5 +1,38 @@
-.landingCss {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
+.landingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  background-size: cover; /* Ajusta la imagen de fondo para que cubra todo el contenedor */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.content {
+  text-align: center;
+  color: rgb(32, 29, 127);
+  margin-bottom: 20px;
+  text-align: center;
+ 
+}
+h1 {
+  font-size: 36px; /* Ajusta el tamaño según tus necesidades */
+  color: #ffffff; /* Cambia el color de acuerdo a tus preferencias */
+  text-align: center;
+}
+
+
+.gifImage {
+  width: 100px; /* Ajusta el tamaño del GIF según tus necesidades */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  top: 120px; 
+}

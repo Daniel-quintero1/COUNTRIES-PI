@@ -5,12 +5,13 @@ import {
   GET_COUNTRIES,
   GET_COUNTRIES_BY_ID,
   GET_COUNTRIES_BY_NAME,
-  ORDER_BY_CONTINENTS,
+  FILTER_BY_CONTINENTS,
   ORDER_BY_NAME,
   GET_FROM,
   CLEAN_BDD,
   SET_CURRENT_PAGE,
   ORDER_BY_POPULATION,
+  FILTER_BY_ACTIVITIES,
 } from "./types";
 
 export const getCountries = () => {
@@ -49,8 +50,8 @@ export function createActivities() {
 export const getActivities = () => {
   return async function (dispatch) {
     const activities = await axios.get(`http://localhost:3001/activity`);
-    const allActivties = activities.data;
-    dispatch({ type: GET_ACTIVITY, payload: allActivties });
+    const allActivities = activities.data;
+    dispatch({ type: GET_ACTIVITY, payload: allActivities });
   };
 };
 
@@ -61,10 +62,16 @@ export function orderByName(name) {
   };
 }
 
-export function orderByContinents(continents) {
+export function filterByContinents(continents) {
   return {
-    type: ORDER_BY_CONTINENTS,
+    type: FILTER_BY_CONTINENTS,
     payload: continents,
+  };
+}
+export function filterByActivities(activities) {
+  return {
+    type: FILTER_BY_ACTIVITIES,
+    payload: activities,
   };
 }
 

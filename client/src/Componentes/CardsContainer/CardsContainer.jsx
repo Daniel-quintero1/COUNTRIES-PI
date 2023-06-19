@@ -38,8 +38,8 @@ const CardsContainer = () => {
         ))}
       </div>
       
-      <button onClick={previusPage}>PREVIUS</button>
-      <button onClick={nextPage}>NEXT</button>
+      <button onClick={previusPage}>Anterior</button>
+      <button onClick={nextPage}>Siguiente</button>
     </div>
   );
 };

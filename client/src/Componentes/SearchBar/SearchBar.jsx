@@ -12,16 +12,17 @@ const SearchBar = () => {
   const handlerSearch = (e) => {
     e.preventDefault();
     dispatch(getCountriesByName(country));
+    setCountry("")
   };
   return (
     <div className={style.cssSearch}>
       <input
         type="text"
-        placeholder="Writing Name of Countries"
+        placeholder="Escribe el Pais"
         value={country}
         onChange={handlerInput}
       />
-      <button onClick={handlerSearch}>SEARCH COUNTRIES</button>
+      <button onClick={handlerSearch}>Busca El Pais</button>
     </div>
   );
 };
