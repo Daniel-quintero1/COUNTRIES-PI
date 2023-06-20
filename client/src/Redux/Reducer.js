@@ -21,7 +21,6 @@ const initialState = {
   detailActivities: {},
 };
 
-const newLocal = "Ascendente Population";
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_COUNTRIES:
@@ -37,62 +36,77 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case ORDER_BY_NAME:
       const copyCountriesName =
         state.countriesBdd.length > 0
-          ? [...state.countries]
+          ? [...state.countriesBdd]
           : [...state.countries];
-
-      const sortCountries = copyCountriesName.sort((a, b) => {
-        if (a.name > b.name) {
-          return payload === "Ascendente" ? -1 : 1;
-        }
-        if (a.name < b.name) {
-          return payload === "Ascendente" ? 1 : -1;
-        }
-        return 0;
-      });
-      return { ...state, countries: sortCountries };
-    case FILTER_BY_CONTINENTS:
-      const AllCountries = state.countries
-      const filterContinent = payload === "" ? AllCountries : AllCountries.filter((e)=> e.continents === payload)
+      let orderName =
+        payload === "asc"
+          ? copyCountriesName.sort(function (a, b) {
+              if (a.name > b.name) return 1;
+              if (b.name > a.name) return -1;
+              return 0;
+            })
+          : copyCountriesName.sort(function (a, b) {
+              if (a.name > b.name) return -1;
+              if (b.name > a.name) return 1;
+              return 0;
+            });
       return {
         ...state,
-        countries: filterContinent
-      }
+        countriesBdd: orderName,
+      };
+    case FILTER_BY_CONTINENTS:
+      const AllCountries = [...state.countries];
+      const filterContinent =
+        payload === "Todos los continentes"
+          ? AllCountries
+          : AllCountries.filter((e) => e.continents === payload);
+      return {
+        ...state,
+        countriesBdd: filterContinent,
+      };
     case FILTER_BY_ACTIVITIES:
       const allCountry = state.countries;
 
       const paisActivities = allCountry.filter((country) => {
-       return country.activities.length > 0;
-       });
+        return country.activities.length > 0;
+      });
       let newArr = [];
 
       for (let i = 0; i < paisActivities.length; i++) {
-      for (let j = 0; j < paisActivities[i].activities.length; j++) {
-       if (paisActivities[i].activities[j].name === payload) {
-        newArr.push(paisActivities[i]);
-           }
+        for (let j = 0; j < paisActivities[i].activities.length; j++) {
+          if (paisActivities[i].activities[j].name === payload) {
+            newArr.push(paisActivities[i]);
           }
-          }
+        }
+      }
       const filtro = payload === "Todos" ? allCountry : newArr;
-          
+
       return {
-           ...state,
-           countries: filtro,
-  }
+        ...state,
+        countries: filtro,
+      };
     case ORDER_BY_POPULATION:
       const copyPopulation =
         state.countriesBdd.length > 0
           ? [...state.countriesBdd]
           : [...state.countries];
-      const sortPopulation = copyPopulation.sort((a, b) => {
-        if (a.population > b.population) {
-          return payload === newLocal ? 1 : -1;
-        }
-        if (a.population < b.population) {
-          return payload === "Menor a Mayor" ? -1 : 1;
-        }
-        return 0;
-      });
-      return { ...state, countries: sortPopulation };
+      let orderPopulation =
+        payload === "POA"
+          ? copyPopulation.sort(function (a, b) {
+              if (a.name > b.name) return 1;
+              if (b.name > a.name) return -1;
+              return 0;
+            })
+          : copyPopulation.sort(function (a, b) {
+              if (a.name > b.name) return -1;
+              if (b.name > a.name) return 1;
+              return 0;
+            });
+      return {
+        ...state,
+        countriesBdd: orderPopulation,
+      };
+
     case CLEAN_BDD:
       return { ...state, countriesBdd: [] };
     case SET_CURRENT_PAGE:

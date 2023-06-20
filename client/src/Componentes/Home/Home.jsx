@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import CardsContainer from "../CardsContainer/CardsContainer";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,17 +14,11 @@ import {
 
 const Home = () => {
   const dispatch = useDispatch();
-  const activities = useSelector ((state) => state.activities)
-  // eslint-disable-next-line
-  const [selectContinent, setSelectContinent] = useState("");
-  // eslint-disable-next-line
-  const continentePrevio = useSelector(
-    (state) => state.countries
-  );
+  const activities = useSelector((state) => state.activities);
 
   useEffect(() => {
     dispatch(getCountries());
-    dispatch(getActivities())
+    dispatch(getActivities());
   }, [dispatch]);
 
   const onClickTodo = () => {
@@ -32,23 +26,23 @@ const Home = () => {
     dispatch(cleanBDD());
     dispatch(setCurrentPage(1));
   };
-    const handleContinentFilter = (e) => {
-      const continent = e.target.value;
-      console.log(continent);
-      if (!continent) {
-        dispatch(getCountries());
-      } else {
-        dispatch(filterByContinents(continent));
-      }
-      setSelectContinent(continent);
-    };
-  function handleFilterByAct(e){
-    e.preventDefault()
-    const value = e.target.value
-    value > 0 ? dispatch(getCountries()):
-    dispatch(filterByActivities(value))
-    dispatch(setCurrentPage(1))
-  }
+
+  const handleContinentFilter = (e) => {
+    const continent = e.target.value;
+    dispatch(filterByContinents(continent));
+    dispatch(setCurrentPage(1));
+  };
+
+  const handleByActivities = (e) => {
+    const value = e.target.value;
+    if (value === "Todos") {
+      dispatch(getCountries());
+    } else {
+      dispatch(filterByActivities(value));
+    }
+    dispatch(setCurrentPage(1));
+  };
+
 
   return (
     <div>
@@ -57,23 +51,33 @@ const Home = () => {
           name="orderByName"
           onChange={(e) => dispatch(orderByName(e.target.value))}
         >
-          {["Ascendente", "Descendente"].map((e, i) => (
-            <option value={e} key={i}>
-              {e}
-            </option>
-          ))}
+          <option value="" key="-" name="-">
+            {" "}
+            -{" "}
+          </option>
+          <option value="asc" key="asc" name="asc">
+            {" "}
+            A-Z{" "}
+          </option>
+          <option value="Desc" key="Desc" name="dsc">
+            {" "}
+            Z-A{" "}
+          </option>
         </select>
         Ordena por Nombre
       </div>
       <div>
-      <select name="filterByContinents" onChange={handleContinentFilter}>
-        <option value="">Todos los continentes</option>
-        <option value="Asia">Asia</option>
-        <option value="Europe">Europa</option>
-        <option value="Americas">Americas</option>
-        <option value="Oceania">Oceania</option>
-        <option value="Africa">Africa</option>
-      </select>
+        <select
+          name="filterByContinents"
+          onChange={(e) => handleContinentFilter(e)}
+        >
+          <option value="">Todos los continentes</option>
+          <option value="Asia">Asia</option>
+          <option value="Europe">Europa</option>
+          <option value="Americas">Americas</option>
+          <option value="Oceania">Oceania</option>
+          <option value="Africa">Africa</option>
+        </select>
         Filtra por Continente
       </div>
       <div>
@@ -81,11 +85,9 @@ const Home = () => {
           name="ordenByPopulation"
           onChange={(e) => dispatch(ordenByPopulation(e.target.value))}
         >
-          {["Menor a Mayor", "Mayor a Menor"].map((e, i) => (
-            <option value={e} key={i}>
-              {e}
-            </option>
-          ))} 
+         <option value="" name="--" key="--">   -   </option>
+                <option value="POA" name="POA" key="POA">↑ population</option>
+                <option value="POE" name="POE" key="POE">↓ population</option>
         </select>
         Ordena por Poblacion{" "}
       </div>
@@ -94,7 +96,7 @@ const Home = () => {
         {activities && activities.length === 0 ? (
           <p>No se han creado actividades</p>
         ) : (
-          <select onChange={(e) => handleFilterByAct(e)}>
+          <select onChange={(e) => handleByActivities(e)}>
             <option value="Todos">Todos</option>
             {activities.map((e) => (
               <option value={e.name} key={e.id}>
@@ -107,7 +109,7 @@ const Home = () => {
       <button value="TODO" onClick={onClickTodo}>
         Paises
       </button>
-      <CardsContainer />
+      <CardsContainer  />
     </div>
   );
 };
