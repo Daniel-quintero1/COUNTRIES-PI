@@ -1,12 +1,13 @@
   .container {
-    height: 93vh;
+    height: 96vh;
     background-color: #f3f1ed;
     display: flex;
     justify-content: center;
     align-items: center;
     background-image: url('../../Imagenes/img2.jpg');
     background-size: cover;
-    z-index: -1;
+    background-attachment:fixed;
+     background-position: center;
   }
   
   .container::before {

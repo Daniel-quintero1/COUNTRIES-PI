@@ -13,7 +13,6 @@ const Detail = () => {
   useEffect(() => {
   dispatch(getCountriesId(id))
   }, [dispatch, id]);
-  console.log(activities);
   return (
     <div className={style.container}>
       <div className={style.card}>

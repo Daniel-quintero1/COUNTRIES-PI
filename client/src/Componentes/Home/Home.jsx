@@ -104,7 +104,7 @@ const Home = () => {
           <div className={style.btn}>
             Busca por Actividad
             {activities && activities.length === 0 ? (
-              <p>No se han creado actividades</p>
+              <p>No se Encuentran Actividades</p>
             ) : (
               <select onChange={(e) => handleByActivities(e)}>
                 <option value="Todos">Todos</option>

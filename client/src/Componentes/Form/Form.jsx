@@ -169,7 +169,7 @@ const Form = () => {
             </select>
             <span>{error.countries}</span>
           </div>
-          <button className={style.btn} type="submit">Crear Actividad</button>
+          <button className={style.btn} type="submit" >Crear Actividad</button>
           <hr />
         </form>
       </div>

@@ -17,18 +17,22 @@ import {
 export const getCountries = () => {
   return async function (dispatch) {
     const countries = await axios.get(`http://localhost:3001/countries`);
-    const allCountries = countries.data; //revisar si es con data o sin data
+    const allCountries = countries.data;
     dispatch({ type: GET_COUNTRIES, payload: allCountries });
   };
 };
 
 export const getCountriesByName = (name) => {
   return async function (dispatch) {
-    const countriesByName = await axios.get(
-      `http://localhost:3001/countries?name=${name}`
-    );
-    const countriesName = countriesByName.data;
-    dispatch({ type: GET_COUNTRIES_BY_NAME, payload: countriesName });
+    try {
+      const countriesByName = await axios.get(
+        `http://localhost:3001/countries?name=${name}`
+      );
+      const countriesName = countriesByName.data;
+      dispatch({ type: GET_COUNTRIES_BY_NAME, payload: countriesName });
+    } catch (error) {
+      alert("Ha ocurrido un error al buscar el país por nombre. Inténtalo nuevamente.");
+    }
   };
 };
 

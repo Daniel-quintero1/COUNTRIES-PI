@@ -11,7 +11,9 @@
   } 
   .fondo {
     background-image: url('https://media.istockphoto.com/id/506392794/es/foto/marcador-rojo-de-panam%C3%A1.jpg?s=612x612&w=0&k=20&c=rdtN-JvI7GTfoJkfNENMzuqwhZF0M6326hOuM_6CQJk=');
-    height: 195vh
+    height: 205vh;
+    background-size: cover;
+    background-attachment:fixed;
   }
 .container {
     display: flex;

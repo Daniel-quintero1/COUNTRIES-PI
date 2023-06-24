@@ -33,13 +33,13 @@ const CardsContainer = () => {
   return (
     <div>
       <div className={style.container}>
-        {currentCard.map((country) => (
-          <Card key={country.id} {...country} />
+        {currentCard.map((country, index) => (
+          <Card key={index} {...country} />
         ))}
       </div>
       
-      <button onClick={previusPage}>Anterior</button>
-      <button onClick={nextPage}>Siguiente</button>
+      <button className={style.btn} onClick={previusPage}>Anterior</button>
+      <button className={style.btn} onClick={nextPage}>Siguiente</button>
     </div>
   );
 };

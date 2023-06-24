@@ -1,12 +1,14 @@
 
   .container {
-    height: 93vh;
+    height: 96vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-image: url('https://media.istockphoto.com/id/157393082/es/foto/mapa-de-colombia-venezuela.jpg?s=612x612&w=0&k=20&c=-NacOOgzKwoEcifFcCS_jDOECQSaPiKhOWpOp6EB8Y8=');
     background-size: cover;
+    background-attachment:fixed;
+     background-position: center;
   }
   
   .container::before {
