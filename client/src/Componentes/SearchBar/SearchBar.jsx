@@ -15,14 +15,15 @@ const SearchBar = () => {
     setCountry("")
   };
   return (
-    <div className={style.cssSearch}>
+    <div className={style.container}>
       <input
         type="text"
         placeholder="Escribe el Pais"
         value={country}
+        className={style.input}
         onChange={handlerInput}
       />
-      <button onClick={handlerSearch}>Busca El Pais</button>
+      <button className={style.button} onClick={handlerSearch}>Busca El Pais</button>
     </div>
   );
 };

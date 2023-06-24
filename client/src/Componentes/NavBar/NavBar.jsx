@@ -6,14 +6,14 @@ const NavBar = () => {
   return (
     <div className={style.navContain}>
       <Link to="/home">
-        <p>Volver al Inicio</p>
+        <p className={style.title}>Volver al Inicio</p>
       </Link>
       <SearchBar />
       <Link to="/form">
-        <p>Crear Actividad</p>
+        <p className={style.title}>Crear Actividad</p>
       </Link>
       <Link to="/">
-        <p>Salir</p>
+        <p className={style.title}>Salir</p>
       </Link>
     </div>
   );

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  getCountries } from "../../Redux/Actions";
+import { getCountries } from "../../Redux/Actions";
 import Validation from "../Validation/Validation";
 import axios from "axios";
+import style from "../Form/Form.module.css";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,6 @@ const Form = () => {
   const [form, setForm] = useState({
     name: "",
     difficulty: "",
-    // season: [],
     season: "",
     duration: "",
     countries: [],
@@ -28,33 +28,28 @@ const Form = () => {
     countries: "",
   });
   const handlerForm = (e) => {
-    const nam = e.target.name;
+    const name = e.target.name;
     const value = e.target.value;
-    setForm({ ...form, [nam]: value });
-    setError(Validation({ ...form, [nam]: value }));
+    setForm({ ...form, [name]: value });
+    setError(Validation({ ...form, [name]: value }));
   };
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    alert("Send Information");
+    alert("Enviando Informacion");
     axios
       .post(`http://localhost:3001/activity`, form)
-      .then((res) => alert("Activities Add"))
+      .then((res) => alert("Actividad Creada"))
       .catch((error) => {
-        // Manejar el error de Bad Request (400)
         if (error.response && error.response.status === 400) {
-          alert("Bad Request: Invalid form data"); // Mostrar mensaje de error específico
-          // También puedes actualizar el estado para mostrar el error en el formulario, por ejemplo:
-          // setError({ ...error, form: "Invalid form data" });
+          alert("Bad Request: Invalid form data");
         } else {
-          // Otro tipo de error
           alert("Error: " + error.message);
         }
-      })
+      });
     setForm({
       name: "",
       difficulty: "",
-      // season: [],
       season: "",
       duration: "",
       countries: [],
@@ -72,100 +67,113 @@ const Form = () => {
       setForm({ ...form, countries: [...selectCountries, value] });
     }
   };
-  // const handlerSelectSeason = (e) => {
-  //   const value = e.target.value;
-  //   const selectCountries = form.season;
-  //   if (selectCountries.includes(value)) {
-  //     setForm({
-  //       ...form,
-  //       season: selectCountries.filter((filtra) => filtra !== value),
-  //     });
-  //   } else {
-  //     setForm({ ...form, season: [...selectCountries, value] });
-  //   }
-  // };
   const buscarId = (id) => {
     const countriesActivity = country.find((e) => e.id === id);
     return countriesActivity.name;
   };
   const countrieMap = form.countries.map((e) => buscarId(e));
 
- 
   return (
-    <form onSubmit={handlerSubmit}>
-      <hr />
-      <div>
-        <label>Actividad Turistica</label>
-        <input
-          type="text"
-          value={form.name}
-          onChange={handlerForm}
-          name="name"
-          placeholder="Escribe tu Actividad..."
-        />
-        <span>{error.name ? error.name : " "}</span>
+    <div className={style.container}>
+      <div className={style.formContainer}>
+        <form onSubmit={handlerSubmit}>
+          <hr />
+          <div>
+            <h1 className={style.titulo}>Agrega la Actividad Turistica</h1>
+            <div className={style.formSeleccion}>
+              <label htmlFor="name">Actividad:</label>
+              <input
+                type="text"
+                id="name"
+                value={form.name}
+                onChange={handlerForm}
+                name="name"
+                className={style.input}
+                placeholder="Escribe tu Actividad..."
+                required
+              />
+            </div>
+            <span>{error.name ? error.name : " "}</span>
+          </div>
+          <div className={style.formSeleccion}>
+            <label htmlFor="difficulty">Dificultad:</label>
+            <select
+              id="difficulty"
+              onChange={handlerForm}
+              name="difficulty"
+              className={style.input}
+              placeholder="Escribe tu Dificultad..."
+            >
+              <option value=""> Selecciona la Dificultad</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              </select>
+            <span>{error.difficulty}</span>
+          </div>
+          <div className={style.formSeleccion}>
+            <label htmlFor="duration">Duracion:</label>
+            <input
+              type="text"
+              id="duration"
+              value={form.duration}
+              onChange={handlerForm}
+              name="duration"
+              className={style.input}
+              placeholder="Escribe el tiempo..."
+            />
+            <span>{error.duration}</span>
+          </div>
+          <div className={style.formSeleccion}>
+            <label htmlFor="season">Temporada:</label>
+            <select
+              id="season"
+              name="season"
+              onChange={handlerForm}
+              className={style.input}
+            >
+              <option value=""> Selecciona la Temporada </option>
+              <option value="Otoño"> Otoño </option>
+              <option value="Verano">Verano</option>
+              <option value="Primavera">Primavera</option>
+              <option value="Invierno">Invierno</option>
+            </select>
+            <span>{error.season}</span>
+          </div>
+          <div className={style.formSeleccion}>
+            <label htmlFor="countries">Pais:</label>
+            <input
+              type="text"
+              id="countries"
+              value={countrieMap}
+              onChange={handlerForm}
+              name="countries"
+              className={style.input}
+              placeholder="Selccion el Pais..."
+              required
+            />
+            <select
+              name="countries"
+              id="countries"
+              multiple={true}
+              value={form.countries}
+              onChange={handlerSelect}
+            >
+              {country.map((e) => (
+                <option className={style.input} key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))}
+            </select>
+            <span>{error.countries}</span>
+          </div>
+          <button className={style.btn} type="submit">Crear Actividad</button>
+          <hr />
+        </form>
       </div>
-      <div>
-        <label>Nivel de Dificultad </label>
-        <input
-          type="text"
-          value={form.difficulty}
-          onChange={handlerForm}
-          name="difficulty"
-          placeholder="Escribe tu Dificultad..."
-        />
-        <span>{error.difficulty}</span>
-      </div>
-      <div>
-        <label>Tiempo de Duracion</label>
-        <input
-          type="text"
-          value={form.duration}
-          onChange={handlerForm}
-          name="duration"
-          placeholder="Escribe el tiempo..."
-        />
-        <span>{error.duration}</span>
-      </div>
-      <div>
-      <label>Temporada del Año</label>
-      <input type="text" value={form.season} onChange={handlerForm} name="season" placeholder="Escribe tu Temporada" />
-        {/* <input
-          type="text"
-          value={form.season.map((e)=> e)}
-          onChange={handlerForm}
-          name="season"
-          placeholder="Select Season..."
-        />
-        <select name="season" multiple={true} value={form.season} onChange={handlerSelectSeason}  >
-       {["Verano", "Otoño", "Invierno", "Primavera"].map((e, i)=> <option key={i} value={e}>{e}</option>)}
-        </select> */}
-        <span>{error.season}</span>
-      </div>
-      <div>
-        <label>Selecciona Tu Pais</label>
-        <input
-          type="text"
-          value={countrieMap}
-          onChange={handlerForm}
-          name="countries"
-          placeholder="Selccion el Pais..."
-        />
-        <select
-          name="countries"
-          multiple={true}
-          value={form.countries}
-          onChange={handlerSelect}
-        >
-          {country.map((e)=> (
-            <option key={e.id} value={e.id}>{e.name}</option>
-          ))}
-        </select>
-        <span>{error.countries}</span>
-      </div>
-      <button type="submit">Agrega la Actividad</button>
-      <hr />
-    </form>
+    </div>
   );
 };
 

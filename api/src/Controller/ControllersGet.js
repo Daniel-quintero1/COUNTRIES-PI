@@ -37,7 +37,15 @@ const getCountriesAll = async () => {
 };
 
 const getCountriesId = async (id) => {
-  const countriesId = await Country.findByPk(id);
+  const countriesId = await Country.findByPk(id, {
+    include: {
+      model: Activity,
+      attributes: ['name', 'difficulty', 'season', 'duration'],
+      through: {
+        attributes: [],
+      },
+    },
+  });
   return countriesId;
 };
 const getCountriesName = async (name) => {

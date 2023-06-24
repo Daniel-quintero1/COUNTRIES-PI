@@ -18,7 +18,6 @@ const idCountries = async (req, res) => {
   const { id } = req.params;
   try {
     let idCount = await getCountriesId(id);
-    console.log(idCount);
     res.status(200).json(idCount);
   } catch (error) {
     res.status(404).json({ error: error.message });

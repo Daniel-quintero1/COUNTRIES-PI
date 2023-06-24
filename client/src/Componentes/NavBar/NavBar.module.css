@@ -3,7 +3,15 @@
     flex-direction: row;
     justify-content: space-around;
     border-radius: 15px;
-    border: 1px solid black;
+    border: 3px solid black;
     align-items: center;
+    background-image: url('../../Imagenes/img2.jpg');
+    background-size: cover;
+    background-position: center
   }
-  
+  .title {
+    text-decoration:underline;
+    color: black;
+    margin: 0;
+    font-size: 20px;
+  }

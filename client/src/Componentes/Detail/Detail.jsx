@@ -9,29 +9,36 @@ const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch()
   const {name, continents, capital, flag, area, population, subregion, activities} = useSelector((state)=> state.countriesDetail)
-  // const navigate = useNavigate();
+  
   useEffect(() => {
   dispatch(getCountriesId(id))
   }, [dispatch, id]);
-console.log(activities);
+  console.log(activities);
   return (
-    <div className={style.detailCss}>
-      <div>
-        <h1>Nombre de la Ciudad: {name}</h1>
-        <h2>Id: {id}</h2>
-        <h4>Nombre del Continente: {continents}</h4>
-        <h5>Capital: {capital}</h5>
-        <h6>Subregion: {subregion}</h6>
-        <h6>Area: {area}</h6>
-        <div>
+    <div className={style.container}>
+      <div className={style.card}>
+        <h1 className={style.title}>Detalle del Pais</h1>
+        <div className={style.infoContainer}>
+        <h1 className={style.subtitle}>Nombre: {name}</h1>
+        <h2 className={style.subtitle}>Id:{id}</h2>
+        <h4 className={style.subtitle}>Nombre del Continente: {continents}</h4>
+        <h5 className={style.subtitle}>Capital: {capital}</h5>
+        <h6 className={style.subtitle}>Subregion: {subregion}</h6>
+        <h6 className={style.subtitle}>Area: {area} km²</h6>
+        <div className={style.img}>
           <img src={flag} alt={name} />
         </div>
-        <h6>Poblacion: {population}</h6>
+        <h6 className={style.subtitle}> <br />Poblacion: {population}</h6>
+        <h6 className={style.activities} >Actividad Turistica:</h6>
+        {activities && activities.length>0 && 
+              activities.map((act) => (
+                <li key={act.id}>
+                    {act.name} ({act.season}) | Duracion:{' '}
+                    {act.duration} - Difilcultad: {act.difficulty}
+                </li>
+              ))}
+        </div>
       </div>
-      {/* <button
-      onClick={()=> {
-        navigate("/home")
-      }}>Back to Home</button> */}
     </div>
   );
 };

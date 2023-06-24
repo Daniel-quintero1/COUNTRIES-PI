@@ -9,23 +9,27 @@ class Card extends React.Component {
   }
   render() {
     return (
-      <div className={style.cardCss}>
-        <Link to={`/detail/${this.props.id}`} key={this.props.id}>
-          <h2>{this.props.name}</h2>
+      <div className={style.card} key={this.props.id}>
+        <Link className={style.link} to={`/detail/${this.props.id}`} key={this.props.id}>
+          <h2 className={style.country}>{this.props.name}</h2>
         </Link>
-        <img
-          className={style.imgCard}
-          src={this.props.flag}
-          alt={`Foto de Bandera ${this.props.name}`}
-        />
-        <h3>Continente: {this.props.continents}</h3>
-        <h3>Poblacion: {this.props.population}</h3>
-        <h3>
-          Actividad Turistica :{" "}
-          {this.props.activities &&
-            this.props.activities.length > 0 &&
-            this.props.activities.map((e) => e.name).join(", ")}
-        </h3>
+        <span className={style.imgContainer}>
+          <img
+            className={style.img}
+            src={this.props.flag}
+            alt={`Foto de Bandera ${this.props.name}`}
+          />
+        </span>
+        <div className={style.textContainer}>
+          <h3>Continente: {this.props.continents}</h3>
+          <h3>Poblacion: {this.props.population}</h3>
+          <h3>
+            Actividad Turistica :{" "}
+            {this.props.activities &&
+              this.props.activities.length > 0 &&
+              this.props.activities.map((e) => e.name).join(", ")}
+          </h3>
+        </div>
       </div>
     );
   }

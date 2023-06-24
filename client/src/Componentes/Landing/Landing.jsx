@@ -1,20 +1,22 @@
-import { useNavigate } from "react-router-dom";
 import style from "./Landing.module.css";
-import backgroundImage from "../../Imagenes/img3.jpg";
 import gifImage from "../../Imagenes/gif1.gif";
+import { Link } from "react-router-dom";
+
 const Landing = () => {
-  const navigate = useNavigate();
 
   return (
-    <div className={style.landingContainer} style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <div className={style.content}>
-        <h1 className={style.h1}>Bienvenido</h1>
-        <p>
-          "Entra a nuestra Pagina y conoce mas Sobre mas de 200+ Paises"
-        </p>
+    <div className={style.Container}>
+      <div className={style.textContainer}>
+        <h1 className={style.title}>Bienvenido</h1>
+        <h2 className={style.text}>
+          "Entra a nuestra pagina y conoce <br /> más de 200+ Países........."
+        </h2>
+        <Link to="/home">
+         <button className={style.btn}>Ingresar</button>
+        </Link>
+        <p className={style.footer}>Proyecto Creado Por Daniel Quintero</p>
       </div>
-      <img src={gifImage} className={style.gifImage} alt="World Map" onClick={()=>navigate("/home") } />
-      <p className={style.p}>INGRESAR</p>
+      <img src={gifImage} className={style.gifImage} alt="World Map" />
     </div>
   );
 };
