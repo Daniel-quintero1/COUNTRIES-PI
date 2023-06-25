@@ -7,20 +7,36 @@ const getCountriesApi = async () => {
   const url = await axios.get(URL);
   return url.data;
 };
+// const getCountriesBdd = async () => {
+//   const createCount = await getCountriesApi();
+//   for (const count of createCount) {
+//     await Country.create({
+//       id: count.alpha3Code,
+//       name: count.name,
+//       flag: count.flags.png,
+//       continents: count.region,
+//       capital: count.capital,
+//       subregion: count.subregion,
+//       area: count.area,
+//       population: count.population,
+//     });
+//   }
+// };
 const getCountriesBdd = async () => {
   const createCount = await getCountriesApi();
   for (const count of createCount) {
-    await Country.create({
-      id: count.alpha3Code,
-      name: count.name,
-      flag: count.flags.png,
-      continents: count.region,
-      capital: count.capital,
-      subregion: count.subregion,
-      area: count.area,
-      population: count.population,
-    })
-  
+    await Country.findOrCreate({
+      where: { id: count.alpha3Code },
+      defaults: {
+        name: count.name,
+        flag: count.flags.png,
+        continents: count.region,
+        capital: count.capital,
+        subregion: count.subregion,
+        area: count.area,
+        population: count.population,
+      },
+    });
   }
 };
 const getCountriesAll = async () => {
@@ -40,7 +56,7 @@ const getCountriesId = async (id) => {
   const countriesId = await Country.findByPk(id, {
     include: {
       model: Activity,
-      attributes: ['name', 'difficulty', 'season', 'duration'],
+      attributes: ["name", "difficulty", "season", "duration"],
       through: {
         attributes: [],
       },

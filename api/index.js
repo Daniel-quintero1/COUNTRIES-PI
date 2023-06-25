@@ -1,11 +1,11 @@
 const { getCountriesBdd } = require('./src/Controller/ControllersGet.js');
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+const port = process.env.PORT  || 3001;
 
-// Syncing all the models at once.
-conn.sync({ force: true }).then(async () => {
+conn.sync({ force: false }).then(async () => {
   getCountriesBdd()
-  server.listen(3001, () => {
-    console.log('AQUI listening at 3001'); // eslint-disable-line no-console
+  server.listen(port, () => {
+    console.log(`AQUI listening at ${port}`); 
   });
 });
