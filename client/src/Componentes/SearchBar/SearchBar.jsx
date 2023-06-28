@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./SearchBar.module.css";
 import { useDispatch } from "react-redux";
-import { getCountriesByName } from "../../Redux/Actions";
+import { getCountriesByName, setCurrentPage } from "../../Redux/Actions";
 
 const SearchBar = () => {
   const [country, setCountry] = useState("");
@@ -13,6 +13,7 @@ const SearchBar = () => {
     e.preventDefault();
     dispatch(getCountriesByName(country));
     setCountry("")
+    dispatch(setCurrentPage(1))
   };
   return (
     <div className={style.container}>
